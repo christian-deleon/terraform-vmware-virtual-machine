@@ -1,6 +1,14 @@
 # VMware Virtual Machine
 
-## Example
+## Using this module
+
+Set GitLab Token
+
+```bash
+export GITLAB_TOKEN="<gitlab_token>"
+```
+
+Example `main.tf`
 
 ```hcl
 terraform {
@@ -10,6 +18,9 @@ terraform {
     vsphere = {
       source  = "hashicorp/vsphere"
       version = "~> 2.5.1"
+    }
+    gitlab = {
+      source = "gitlabhq/gitlab"
     }
   }
 }
@@ -57,7 +68,7 @@ resource "vsphere_tag" "main" {
 
 module "vm_with_tags_and_additional_disk" {
   source = "gitlab.robochris.net/devops/vmware-virtual-machine/vmware"
-  version = "0.8.0"
+  version = "1.0.0"
 
   count = length(var.datastores)
 
