@@ -83,6 +83,6 @@ module "vm_with_tags_and_additional_disk" {
   disk_size            = 50
   additional_disk_size = 100
   tags                 = [vsphere_tag.main.id]
-  folder               = vsphere_folder.this.path
+  folder_path          = vsphere_folder.this.path
 }
 ```

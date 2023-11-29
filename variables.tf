@@ -8,6 +8,12 @@ variable "compute_cluster" {
   description = "The name of the compute cluster to use for the virtual machines."
 }
 
+variable "host" {
+  type        = string
+  default     = null
+  description = "The name of the host to use for the virtual machines."
+}
+
 variable "datastore" {
   type        = string
   description = "The name of the datastore to use for the virtual machines."
@@ -18,9 +24,15 @@ variable "network" {
   description = "The name of the network to use for the virtual machines."
 }
 
-variable "folder" {
+variable "create_folder" {
+  type        = bool
+  default     = true
+  description = "Whether to create a folder for the virtual machines."
+}
+
+variable "folder_path" {
   type        = string
-  description = "The folder to create the VM in."
+  description = "The folder path to use for the virtual machines."
   default     = null
 }
 

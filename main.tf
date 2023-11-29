@@ -17,6 +17,14 @@ data "vsphere_network" "this" {
   datacenter_id = data.vsphere_datacenter.this.id
 }
 
+resource "vsphere_folder" "this" {
+  count         = var.create_folder ? 1 : 0
+  
+  path          = var.folder_path
+  type          = "vm"
+  datacenter_id = data.vsphere_datacenter.this.id  
+}
+
 data "vsphere_virtual_machine" "template" {
   name          = var.template
   datacenter_id = data.vsphere_datacenter.this.id
@@ -32,7 +40,7 @@ resource "vsphere_virtual_machine" "this" {
   num_cpus         = var.cores
   memory           = var.memory
   tags             = var.tags
-  folder           = var.folder
+  folder           = var.folder_path
 
   network_interface {
     network_id = data.vsphere_network.this.id
