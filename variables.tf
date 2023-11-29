@@ -26,7 +26,7 @@ variable "network" {
 
 variable "create_folder" {
   type        = bool
-  default     = true
+  default     = false
   description = "Whether to create a folder for the virtual machines."
 }
 
