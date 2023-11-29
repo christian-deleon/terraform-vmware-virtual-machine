@@ -76,4 +76,6 @@ resource "vsphere_virtual_machine" "this" {
       network_interface {}
     }
   }
+
+  depends_on = [vsphere_folder.this]
 }
