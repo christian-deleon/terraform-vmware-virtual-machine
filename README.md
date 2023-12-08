@@ -1,11 +1,25 @@
 # VMware Virtual Machine
 
-## Using this module
+## Example Project
 
-Set GitLab Token
+Example `variables.tf`
 
-```bash
-export GITLAB_TOKEN="<gitlab_token>"
+```hcl
+variable "vsphere_endpoint" {
+  type        = string
+  description = "The vSphere endpoint"
+}
+
+variable "vsphere_username" {
+  type        = string
+  description = "The vSphere username"
+}
+
+variable "vsphere_password" {
+  type        = string
+  sensitive   = true
+  description = "The vSphere password"
+}
 ```
 
 Example `main.tf`
@@ -19,9 +33,6 @@ terraform {
       source  = "hashicorp/vsphere"
       version = "~> 2.5.1"
     }
-    gitlab = {
-      source = "gitlabhq/gitlab"
-    }
   }
 }
 
@@ -32,14 +43,8 @@ provider "vsphere" {
   allow_unverified_ssl = true
 }
 
-data "vsphere_datacenter" "this" {
-  name = var.datacenter
-}
-
-resource "vsphere_folder" "this" {
-  path          = var.folder_path
-  type          = "vm"
-  datacenter_id = data.vsphere_datacenter.this.id
+locals {
+  name = "my-terraform-vm"
 }
 
 ####################################################################################################
@@ -47,7 +52,7 @@ resource "vsphere_folder" "this" {
 ####################################################################################################
 
 resource "vsphere_tag_category" "main" {
-  name        = var.name
+  name        = local.name
   cardinality = "SINGLE"
   description = "Managed by Terraform"
 
@@ -57,7 +62,7 @@ resource "vsphere_tag_category" "main" {
 }
 
 resource "vsphere_tag" "main" {
-  name        = var.name
+  name        = local.name
   category_id = vsphere_tag_category.main.id
   description = "Managed by Terraform"
 }
@@ -68,21 +73,21 @@ resource "vsphere_tag" "main" {
 
 module "vm_with_tags_and_additional_disk" {
   source = "gitlab.robochris.net/devops/vmware-virtual-machine/vmware"
-  version = "1.0.0"
+  version = "1.3.0"
 
-  count = length(var.datastores)
-
-  datacenter           = var.datacenter
-  compute_cluster      = var.compute_cluster
-  datastore            = var.datastores[count.index]
-  network              = var.network
-  template             = var.template
-  name                 = "${var.name}-with-tags-disk-${count.index}"
+  datacenter           = "Datacenter"
+  compute_cluster      = "Cluster01"
+  datastore            = "host1_datastore1"
+  network              = "VM Network"
+  host                 = "esxi1.local"
+  template             = "ubuntu18-server"
+  name                 = local.name
   cores                = 4
   memory               = 4096
   disk_size            = 50
   additional_disk_size = 100
   tags                 = [vsphere_tag.main.id]
-  folder_path          = vsphere_folder.this.path
+  create_folder        = true
+  folder_path          = "My-Terraform-Folder"
 }
 ```
