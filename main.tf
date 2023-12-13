@@ -36,7 +36,7 @@ resource "vsphere_virtual_machine" "this" {
   datastore_id     = data.vsphere_datastore.this.id
   guest_id         = data.vsphere_virtual_machine.template.guest_id
   scsi_type        = data.vsphere_virtual_machine.template.scsi_type
-  firmware         = data.vsphere_virtual_machine.template.firmware
+  firmware         = "efi"
   num_cpus         = var.cores
   memory           = var.memory
   tags             = var.tags
