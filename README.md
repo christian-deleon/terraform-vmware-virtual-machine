@@ -73,7 +73,7 @@ resource "vsphere_tag" "main" {
 
 module "vm_with_tags_and_additional_disk" {
   source = "gitlab.robochris.net/devops/vmware-virtual-machine/vmware"
-  version = "1.3.0"
+  version = "1.3.1"
 
   datacenter           = "Datacenter"
   compute_cluster      = "Cluster01"
