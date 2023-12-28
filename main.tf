@@ -47,20 +47,21 @@ resource "vsphere_virtual_machine" "this" {
   }
 
   disk {
-    label            = data.vsphere_virtual_machine.template.disks.0.label
+    label            = "disk0"
     size             = var.disk_size
     unit_number      = 0
-    thin_provisioned = data.vsphere_virtual_machine.template.disks.0.thin_provisioned
+    thin_provisioned = "true"
   }
 
   dynamic "disk" {
     for_each = var.additional_disk_size == null ? [] : [var.additional_disk_size]
+    iterator = disk
 
     content {
-      label            = "disk1"
-      size             = var.additional_disk_size
-      unit_number      = 1
-      thin_provisioned = data.vsphere_virtual_machine.template.disks.0.thin_provisioned
+      label            = "disk${disk.key + 1}"
+      size             = disk.value
+      unit_number      = disk.key + 1
+      thin_provisioned = "true"
     }
   }
 
