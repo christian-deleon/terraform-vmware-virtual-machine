@@ -18,11 +18,11 @@ data "vsphere_network" "this" {
 }
 
 resource "vsphere_folder" "this" {
-  count         = var.create_folder ? 1 : 0
-  
+  count = var.create_folder ? 1 : 0
+
   path          = var.folder_path
   type          = "vm"
-  datacenter_id = data.vsphere_datacenter.this.id  
+  datacenter_id = data.vsphere_datacenter.this.id
 }
 
 data "vsphere_virtual_machine" "template" {
