@@ -120,3 +120,27 @@ variable "dns_servers" {
   default     = null
   description = "The DNS servers to use for the virtual machines."
 }
+
+variable "create_baseline_snapshot" {
+  type        = bool
+  default     = false
+  description = "Whether to create a baseline snapshot for the virtual machines."
+}
+
+variable "baseline_snapshot_memory" {
+  type        = bool
+  default     = false
+  description = "Whether to include the memory in the baseline snapshot for the virtual machines."
+}
+
+variable "baseline_snapshot_quiesce" {
+  type        = bool
+  default     = false
+  description = "Whether to quiesce the baseline snapshot for the virtual machines."
+}
+
+variable "baseline_snapshot_consolidate" {
+  type        = bool
+  default     = false
+  description = "Whether to consolidate the baseline snapshot for the virtual machines."
+}

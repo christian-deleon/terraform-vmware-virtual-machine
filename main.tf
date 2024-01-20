@@ -86,3 +86,14 @@ resource "vsphere_virtual_machine" "this" {
 
   depends_on = [vsphere_folder.this]
 }
+
+resource "vsphere_virtual_machine_snapshot" "baseline" {
+  count = var.create_baseline_snapshot ? 1 : 0
+
+  virtual_machine_uuid = vsphere_virtual_machine.this.id
+  snapshot_name        = "baseline"
+  description          = "Baseline snapshot"
+  memory               = var.baseline_snapshot_memory
+  quiesce              = var.baseline_snapshot_quiesce
+  consolidate          = var.baseline_snapshot_consolidate
+}
