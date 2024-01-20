@@ -95,3 +95,28 @@ variable "tags" {
   default  = null
   nullable = true
 }
+
+variable "ipv4_address" {
+  type        = string
+  default     = null
+  description = "The IPv4 address to use for the virtual machines."
+}
+
+
+variable "ipv4_netmask" {
+  type        = string
+  default     = null
+  description = "The IPv4 netmask to use for the virtual machines."
+}
+
+variable "ipv4_gateway" {
+  type        = string
+  default     = null
+  description = "The IPv4 gateway to use for the virtual machines."
+}
+
+variable "dns_servers" {
+  type        = list(string)
+  default     = null
+  description = "The DNS servers to use for the virtual machines."
+}

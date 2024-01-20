@@ -69,12 +69,18 @@ resource "vsphere_virtual_machine" "this" {
     template_uuid = data.vsphere_virtual_machine.template.id
 
     customize {
+      dns_server_list = var.dns_servers
+      ipv4_gateway    = var.ipv4_gateway
+
       linux_options {
         host_name = var.name
         domain    = var.linux_domain
       }
 
-      network_interface {}
+      network_interface {
+        ipv4_address = var.ipv4_address
+        ipv4_netmask = var.ipv4_netmask
+      }
     }
   }
 
