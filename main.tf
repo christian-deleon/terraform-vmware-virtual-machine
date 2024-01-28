@@ -84,6 +84,18 @@ resource "vsphere_virtual_machine" "this" {
     }
   }
 
+  connection {
+    type        = "ssh"
+    user        = var.remote_exec_user
+    password    = var.remote_exec_password
+    private_key = file(var.remote_exec_private_key_path)
+    host        = self.default_ip_address
+  }
+
+  provisioner "remote-exec" {
+    script = var.remote_exec_script_path
+  }
+
   depends_on = [vsphere_folder.this]
 }
 

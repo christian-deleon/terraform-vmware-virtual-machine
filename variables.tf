@@ -1,3 +1,7 @@
+########################################
+# vSphere Settings
+########################################
+
 variable "datacenter" {
   type        = string
   description = "The name of the datacenter to use for the virtual machines."
@@ -35,6 +39,20 @@ variable "folder_path" {
   description = "The folder path to use for the virtual machines."
   default     = null
 }
+
+variable "template" {
+  type = string
+}
+
+variable "tags" {
+  type     = list(string)
+  default  = null
+  nullable = true
+}
+
+########################################
+# Virtual Machine Settings
+########################################
 
 variable "name" {
   type        = string
@@ -86,15 +104,9 @@ variable "additional_disk_size" {
   }
 }
 
-variable "template" {
-  type = string
-}
-
-variable "tags" {
-  type     = list(string)
-  default  = null
-  nullable = true
-}
+########################################
+# Network Settings
+########################################
 
 variable "ipv4_address" {
   type        = string
@@ -121,6 +133,10 @@ variable "dns_servers" {
   description = "The DNS servers to use for the virtual machines."
 }
 
+########################################
+# Baseline Snapshot
+########################################
+
 variable "create_baseline_snapshot" {
   type        = bool
   default     = false
@@ -143,4 +159,32 @@ variable "baseline_snapshot_consolidate" {
   type        = bool
   default     = false
   description = "Whether to consolidate the baseline snapshot for the virtual machines."
+}
+
+########################################
+# Remote Exec
+########################################
+
+variable "remote_exec_user" {
+  type        = string
+  default     = null
+  description = "The remote-exec provisioner user to use for the virtual machines."
+}
+
+variable "remote_exec_password" {
+  type        = string
+  default     = null
+  description = "The remote-exec provisioner password to use for the virtual machines."
+}
+
+variable "remote_exec_private_key_path" {
+  type        = string
+  default     = null
+  description = "The remote-exec provisioner private key to use for the virtual machines."
+}
+
+variable "remote_exec_script_path" {
+  type        = string
+  default     = null
+  description = "The remote-exec provisioner script to use for the virtual machines."
 }
